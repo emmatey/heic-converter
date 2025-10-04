@@ -41,34 +41,40 @@ def construct_save_loc(path_object, suffix):
 
     return out_path
 
-if __name__ == "__main__":
-    argv = sys.argv
-    # create options for
-    # 1. .PNG/JPG i.e lossy/lossless
-    # 2. delete or preserve original
-    # 3. rename or not.
-
+def main():
     # Argument API
-    # [Python3, renamer.py, root_dir, JPEG/PNG, del/sv, rn/no_rn]
+    # [renamer.py, root_dir, ".JPEG"/".PNG", "bool"(0/1): delete original?]
+    
+    argv = sys.argv
+    if len(argv) != 4:
+        print("Error: Incorret number of arguments.")
+        print("Usage: python renamer.py <root_dir> <.JPEG/.PNG> <0/1: delete original?>")
+        sys.exit(1)
 
-    for (dirpath, dirnames, filenames) in os.walk(argv[2]):
+    ROOT_DIR = argv[1]
+    OUT_SUFFIX = argv[2]
+    DEL = int(argv[3])
+
+    for (dirpath, dirnames, filenames) in os.walk(ROOT_DIR):
         for file in filenames:
             path_str = os.path.join(dirpath, file)
             source_path = pathlib.Path(path_str)
 
             if source_path.suffix.lower() == ".heic":
-                out_loc = construct_save_loc(source_path, ".JPEG") 
+                out_loc = construct_save_loc(source_path, OUT_SUFFIX) 
                 pillowImg = decode(source_path)
                 exif = pillowImg.info.get("exif")
-                
+
                 print("saving...")
                 save_kwargs = {"quality": 95, "optimize": True}
                 if exif:
                     save_kwargs["exif"] = exif
+
                 try:
-                    pillowImg.save(out_loc, "JPEG", **save_kwargs)
+                    pillowImg.save(out_loc, **save_kwargs)
                     print(f"Save location = {out_loc}\n")
-                    os.remove(source_path)
+                    if DEL == 1:
+                        os.remove(source_path)
                 except Exception as e:
                     print(f"failed to convert {pillowImg}\n{e}")
 
@@ -80,4 +86,7 @@ if __name__ == "__main__":
 
                 except Exception as e:
                     print(f"Failed to rename MOV file {source_path.name}. Error: {e}\n")
-                    
+    
+
+if __name__ == "__main__":
+  main()
