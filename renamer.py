@@ -66,7 +66,7 @@ def main():
 
                 try:
                     print("saving...")
-                    pillowImg.save(out_loc, "quality": 95, "optimize": True)
+                    pillowImg.save(out_loc, quality = 95, optimize = True)
                     print(f"Save location = {out_loc}\n")
                     if DEL == 1:
                         os.remove(source_path)
