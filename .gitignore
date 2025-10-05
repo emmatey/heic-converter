@@ -1,0 +1,42 @@
+Standard .gitignore file for Python projects
+Virtual Environment
+The locally created virtual environment directory
+
+.venv/
+venv/
+env/
+Byte-compiled / Optimized files
+Compiled Python code
+
+pycache/
+*.pyc
+Optimized CPython files
+
+*.pyd
+*.so
+Distribution files
+
+dist/
+build/
+*.egg-info/
+IDE and Editor Files (Common)
+VS Code
+
+.vscode/
+PyCharm / IntelliJ
+
+.idea/
+Sublime Text
+
+*.sublime-workspace
+*.sublime-project
+Testing and Temporary Files
+Coverage reports
+
+.coverage
+htmlcov/
+.nox/
+Logs and Databases
+
+*.log
+*.sqlite3
