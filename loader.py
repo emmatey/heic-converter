@@ -4,7 +4,8 @@
 # on save, call load method that subtracts this size
 # from initial goal size.
 # derive loading print statments from this.
-import pathlib
+from pathlib import Path
+import sys
 
 class loader:
 
@@ -16,29 +17,24 @@ class loader:
     def get_root_size(self, root_path):
         # returns the size of the given filesystem
         size = 0
-        path = pathlib.Path(root_path)
+        path = Path(root_path)
 
         for file in path.rglob('*'):
-            if file.is_file():
+            path_token = Path(file)
+            if path_token.is_file():
                 size += file.stat().st_size
 
         return size
     
     def load(self, file_path):
         # increments the size of processed files.
-        file_size = 0
-
-        if file_path.is_file():
-            file_size = file_path.stat().st_size
-        else:
-            print("Error in loader module load()")
+        file_size = file_path.stat().st_size
 
         self.processed_sum += file_size
-
         self.print_progress()
 
     def print_progress(self):
-        self.progress = self.processed_sum / self.root_size
+        progress = round((self.processed_sum / self.root_size), 3)
+        self.progress = progress * 100
 
-        print(f'Loading... {self.progress}% complete')
-
+        print(f'Loading... {self.progress}% complete\n')

@@ -8,7 +8,7 @@ import sys
 
 
 def decode(path_object):
-    print(f"decoding file...{path_object.name}")
+    print(f"Decoding file...{path_object.name}...")
     heif_file = pyheif.read(path_object)
     image = Image.frombytes(
         heif_file.mode, 
@@ -20,12 +20,10 @@ def decode(path_object):
         )
     # return value is a pillow image object, use 
     # save(path, ".imgtype") to convert.
-    print("decoded :)")
     return image
 
 def construct_save_loc(path_object, suffix, RENAME = 1):
     # get file creation date
-    print("constructing save location...")
     stat_result_obj = path_object.stat()
     creation_date_stamp = stat_result_obj.st_mtime
     creation_date = datetime.fromtimestamp(creation_date_stamp).strftime("%Y-%m-%d")
@@ -37,12 +35,9 @@ def construct_save_loc(path_object, suffix, RENAME = 1):
 
     if RENAME == 0:
         out_path = path_object.with_suffix(suffix)
-        print("simple save location constructed.")
         return out_path
     
     out_path = path_object.with_name(new_filename_str)
-
-    print("save location constructed.")
 
     return out_path
 
@@ -73,14 +68,12 @@ def main():
                 pillowImg = decode(source_path)
 
                 try:
-                    print("saving...")
+                    print(f"Converting to {OUT_SUFFIX}")
                     pillowImg.save(out_loc, quality = 95, optimize = True)
                     print(f"Save location = {out_loc}")
+                    loading_object.load(out_loc)
                     if DEL == 1:
-                        print("deleting original...")
                         os.remove(source_path)
-                        print("done.")
-                    loading_object.load(file)
                 except Exception as e:
                     print(f"failed to convert {pillowImg}\n{e}")
 
@@ -94,7 +87,8 @@ def main():
                 
                 try:
                     source_path.rename(out_loc)
-                    print(f".MOV renamed to {out_loc.name}\n")
+                    print(f".MOV renamed to {out_loc.name}")
+                    loading_object.load(out_loc)
 
                 except Exception as e:
                     print(f"Failed to rename MOV file {source_path.name}. Error: {e}\n")
