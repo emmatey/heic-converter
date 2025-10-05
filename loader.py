@@ -34,7 +34,10 @@ class loader:
         self.print_progress()
 
     def print_progress(self):
-        progress = round((self.processed_sum / self.root_size), 3)
-        self.progress = progress * 100
+        progress = (self.processed_sum / self.root_size)
+        self.progress = round((progress * 100), 2)
 
         print(f'Loading... {self.progress}% complete\n')
+
+    def complete_load(self):
+        print(f'Loading... 100.0% complete (Processing finished!)\n')

@@ -71,7 +71,7 @@ def main():
                     print(f"Converting to {OUT_SUFFIX}")
                     pillowImg.save(out_loc, quality = 95, optimize = True)
                     print(f"Save location = {out_loc}")
-                    loading_object.load(out_loc)
+                    loading_object.load(source_path)
                     if DEL == 1:
                         os.remove(source_path)
                 except Exception as e:
@@ -93,6 +93,7 @@ def main():
                 except Exception as e:
                     print(f"Failed to rename MOV file {source_path.name}. Error: {e}\n")
     
+    loading_object.complete_load()
 
 if __name__ == "__main__":
   main()
