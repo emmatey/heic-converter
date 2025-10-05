@@ -1,9 +1,11 @@
+from datetime import datetime
+from loader import loader
 import os
 import pathlib
-import sys
-from datetime import datetime
-import pyheif
 from PIL import Image
+import pyheif
+import sys
+
 
 def decode(path_object):
     print(f"decoding file...{path_object.name}")
@@ -58,7 +60,8 @@ def main():
     OUT_SUFFIX = argv[2]
     DEL = int(argv[3])
     RENAME = int(argv[4])
-    
+
+    loading_object = loader(ROOT_DIR)
 
     for (dirpath, dirnames, filenames) in os.walk(ROOT_DIR):
         for file in filenames:
@@ -76,7 +79,8 @@ def main():
                     if DEL == 1:
                         print("deleting original...")
                         os.remove(source_path)
-                        print("done.\n")
+                        print("done.")
+                    loading_object.load(file)
                 except Exception as e:
                     print(f"failed to convert {pillowImg}\n{e}")
 
