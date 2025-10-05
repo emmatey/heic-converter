@@ -21,7 +21,7 @@ class loader:
 
         for file in path.rglob('*'):
             path_token = Path(file)
-            if path_token.is_file():
+            if path_token.suffix.lower() == '.mov' or '.heic':
                 size += file.stat().st_size
 
         return size
