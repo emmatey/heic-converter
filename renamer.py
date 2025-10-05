@@ -38,8 +38,6 @@ def construct_save_loc(path_object, suffix, RENAME = 1):
         print("simple save location constructed.")
         return out_path
     
-    # Using .with_name() to preserve the parent directory
-    # The 'out_path' is now the FULL path to the new JPEG file.
     out_path = path_object.with_name(new_filename_str)
 
     print("save location constructed.")
