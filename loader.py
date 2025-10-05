@@ -15,15 +15,16 @@ class loader:
         self.progress = 0
 
     def get_root_size(self, root_path):
-        # returns the size of the given filesystem
+        # returns the size of the given directory and all its children, awww
         size = 0
         path = Path(root_path)
 
         for file in path.rglob('*'):
             path_token = Path(file)
-            if path_token.suffix.lower() == '.mov' or '.heic':
+            if path_token.suffix.lower() in ['.heic']:
                 size += file.stat().st_size
-
+        gb_size = round((size / 1024 ** 3),2)
+        print(f'Dataset size = {gb_size} GB.')
         return size
     
     def load(self, file_path):

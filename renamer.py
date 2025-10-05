@@ -87,8 +87,7 @@ def main():
                 
                 try:
                     source_path.rename(out_loc)
-                    print(f".MOV renamed to {out_loc.name}")
-                    loading_object.load(out_loc)
+                    print(f".MOV renamed to {out_loc.name}\n")
 
                 except Exception as e:
                     print(f"Failed to rename MOV file {source_path.name}. Error: {e}\n")
