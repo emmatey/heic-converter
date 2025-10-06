@@ -49,13 +49,16 @@ def main():
     if len(argv) != 5:
         print("Error: Incorret number of arguments.")
         print("Usage: python renamer.py <root_dir> <.JPEG/.PNG> <0/1: delete original?> <0/1: rename?>")
-        sys.exit(1)
+        return 1
 
     ROOT_DIR = argv[1]
     OUT_SUFFIX = argv[2]
     DEL = int(argv[3])
     RENAME = int(argv[4])
 
+    if OUT_SUFFIX.lower() != ".jpeg" and OUT_SUFFIX.lower() != ".png":
+        print(f"Error: Unknown file suffix {OUT_SUFFIX}, please enter '.JPEG' or '.PNG'")
+        return 2
     loading_object = loader(ROOT_DIR)
 
     for (dirpath, dirnames, filenames) in os.walk(ROOT_DIR):
