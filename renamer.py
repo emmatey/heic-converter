@@ -5,7 +5,9 @@ import pathlib
 from PIL import Image
 import pyheif
 import sys
-
+# TODO
+# handle the case where files are already .jpg but need to be renamed.
+# give option to rename only to the date, and give an option to use last modified or creation date.
 
 def decode(path_object):
     print(f"Decoding file...{path_object.name}...")
